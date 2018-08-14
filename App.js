@@ -21,7 +21,12 @@ const RootStack = createStackNavigator(
       })
     },
     How: HowScreen,
-    Game: GameScreen,
+    Game: {
+      screen: GameScreen,
+      navigationOptions: () => ({
+        gesturesEnabled: false
+      })
+    },
   },
   {
     initialRouteName: 'Splash',
