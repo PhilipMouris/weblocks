@@ -3,9 +3,13 @@ import { View, Text, Button, StyleSheet, Dimensions, TouchableWithoutFeedback, I
 import { createStackNavigator } from 'react-navigation';
 import * as Animatable from 'react-native-animatable';
 import cube from './assets/splash.png';
+import data from './maps.json';
+import converter from './converter';
 
 export default class MenuScreen extends React.Component {
   render() {
+    let letterMap = data.maps[0];
+    let mapArray = converter.convert(letterMap.substring(3,39));
     return (
       <View style={styles.container}>
         <Animatable.View animation="rotate" iterationCount="infinite" duration={2000} easing="linear" style={styles.logoContainer}>
@@ -13,11 +17,7 @@ export default class MenuScreen extends React.Component {
         </Animatable.View>
         <TouchableWithoutFeedback>
           <View>
-            <Text onPress={() => this.props.navigation.navigate('Game',{map: [[0,0,2,0,0],
-                                                                           [100,1,2,0,200],
-                                                                           [0,1,2,0,0],
-                                                                           [0,1,3,3,3],
-                                                                           [0,0,0,0,0]],level: 1})} style={styles.start}>Start</Text>
+            <Text onPress={() => this.props.navigation.navigate('Game',{map: mapArray,level: 1})} style={styles.start}>Start</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback>

@@ -4,6 +4,8 @@ import { createStackNavigator } from 'react-navigation';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import * as Animatable from 'react-native-animatable';
 import { Font } from 'expo';
+import data from './maps.json';
+import converter from './converter';
 
 export default class GameScreen extends React.Component {
   constructor(props) {
@@ -21,8 +23,8 @@ export default class GameScreen extends React.Component {
       for(let j = 0;j<this.state.grid.length;j++){
         let buttonColor = colors[this.state.grid[i][j]];
         if(!buttonColor)
-          if(this.state.grid[i][j]===200)
-            buttonColor = 'white';
+          if(this.state.grid[i][j]===300)
+            buttonColor = 'black';
           else
             buttonColor = 'turquoise';
         let buttonStyle = {
@@ -83,14 +85,14 @@ export default class GameScreen extends React.Component {
   }
 
   onSwipeUp(i,j) {
-    if(this.state.grid[i][j]===200)
+    if(this.state.grid[i][j]===300)
       return;
     if(this.state.grid[i][j]===0)
        return;
     if(this.state.grid[i][j]===this.state.grid[i][j+1] || this.state.grid[i][j]===this.state.grid[i][j-1])
        return;
     try {
-      if(this.state.grid[i][j]==100 && this.state.grid[i-1][j]==200)
+      if(this.state.grid[i][j]===100 && i===3 && j===5)
          this.setState({win: true});
       else {
         let x = i;
@@ -127,14 +129,14 @@ export default class GameScreen extends React.Component {
   }
 
   onSwipeDown(i,j) {
-    if(this.state.grid[i][j]===200)
+    if(this.state.grid[i][j]===300)
       return;
     if(this.state.grid[i][j]===0)
        return;
     if(this.state.grid[i][j]===this.state.grid[i][j+1] || this.state.grid[i][j]===this.state.grid[i][j-1])
        return;
     try {
-      if(this.state.grid[i][j]==100 && this.state.grid[i+1][j]==200)
+      if(this.state.grid[i][j]===100 && i===1 && j===5)
          this.setState({win: true});
       else {
         let x = i;
@@ -171,7 +173,7 @@ export default class GameScreen extends React.Component {
   }
 
   onSwipeLeft(i,j) {
-    if(this.state.grid[i][j]===200)
+    if(this.state.grid[i][j]===300)
       return;
     if(this.state.grid[i][j]===0)
        return;
@@ -179,7 +181,7 @@ export default class GameScreen extends React.Component {
       if(!(this.state.grid[i][j]===this.state.grid[i][j+1] || this.state.grid[i][j]===this.state.grid[i][j-1]))
         return;
     try {
-      if(this.state.grid[i][j]==100 && this.state.grid[i][j-1]==200)
+      if(this.state.grid[i][j]===100 && i===2 && j===6)
          this.setState({win: true});
       else {
         let x = j;
@@ -216,7 +218,7 @@ export default class GameScreen extends React.Component {
   }
 
   onSwipeRight(i,j) {
-    if(this.state.grid[i][j]===200)
+    if(this.state.grid[i][j]===300)
       return;
     if(this.state.grid[i][j]===0)
        return;
@@ -224,7 +226,7 @@ export default class GameScreen extends React.Component {
       if(!(this.state.grid[i][j]===this.state.grid[i][j+1] || this.state.grid[i][j]===this.state.grid[i][j-1]))
         return;
     try {
-      if(this.state.grid[i][j]==100 && this.state.grid[i][j+1]==200)
+      if(this.state.grid[i][j]==100 && i===2 && j===4)
          this.setState({win: true});
       else {
         let x = j;
@@ -261,46 +263,9 @@ export default class GameScreen extends React.Component {
   }
 
   render() {
-    let currentMap = null;
-    let nextMap = null;
-    if(this.state.level===1) {
-      currentMap = [[0,0,2,0,0],
-                   [100,1,2,0,200],
-                   [0,1,2,0,0],
-                   [0,1,3,3,3],
-                   [0,0,0,0,0]];
-      nextMap = [[0,0,0,4,5,0],
-                 [100,1,0,4,5,200],
-                 [0,1,0,4,5,0],
-                 [0,1,0,0,5,0],
-                 [0,1,2,2,2,0],
-                 [0,3,3,3,3,0]];
-    }
-    if(this.state.level===2) {
-      currentMap = [[0,0,0,4,5,0],
-                   [100,1,0,4,5,200],
-                   [0,1,0,4,5,0],
-                   [0,1,0,0,5,0],
-                   [0,1,2,2,2,0],
-                   [0,3,3,3,3,0]];
-      nextMap = [[0,1,0,0,0,6,0],
-                 [0,1,0,0,5,6,0],
-                 [100,1,4,4,5,6,200],
-                 [0,1,0,0,5,6,0],
-                 [0,1,0,0,5,6,0],
-                 [0,2,2,2,2,2,3],
-                 [0,0,0,0,0,0,3]];
-    }
-    if(this.state.level===3){
-      currentMap = [[0,1,0,0,0,6,0],
-                   [0,1,0,0,5,6,0],
-                   [100,1,4,4,5,6,200],
-                   [0,1,0,0,5,6,0],
-                   [0,1,0,0,5,6,0],
-                   [0,2,2,2,2,2,3],
-                   [0,0,0,0,0,0,3]];
-    }
-    if(this.state.win && this.state.level===3)
+    let letterMap = data.maps[this.props.navigation.state.params.level];
+    let nextMap = converter.convert(letterMap.substring(3,39));
+    if(this.state.win && this.state.level===100)
       return (
         <View style={styles.container}>
           <Animatable.Text style={styles.congratsText} animation="tada">Congrats</Animatable.Text>
@@ -334,7 +299,8 @@ export default class GameScreen extends React.Component {
           </View>
           <TouchableWithoutFeedback>
             <View style={styles.resetContainer}>
-              <Text style={styles.reset} onPress={() => this.setState({grid: currentMap})}>Reset</Text>
+              <Text style={styles.reset} onPress={() => { let currentMap = converter.convert(data.maps[this.props.navigation.state.params.level-1].substring(3,39));
+                                                          this.setState({grid: currentMap})}}>Reset</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -343,7 +309,7 @@ export default class GameScreen extends React.Component {
   }
 }
 const GRID_SIZE = 500;
-const colors = ['#494949', 'red', 'orange', 'green', 'blue', 'yellow', 'purple', 'pink', 'brown', 'black'];
+const colors = ['#494949', 'red', 'orange', 'green', 'blue', 'yellow', 'purple', 'pink', 'brown', 'fuchsia', 'crimson', 'greenyellow', 'silver', 'dodgerblue', 'darkred'];
 const styles = StyleSheet.create({
   container: {
     flex: 1,
