@@ -92,7 +92,7 @@ export default class GameScreen extends React.Component {
     if(this.state.grid[i][j]===this.state.grid[i][j+1] || this.state.grid[i][j]===this.state.grid[i][j-1])
        return;
     try {
-      if(this.state.grid[i][j]===100 && i===3 && j===5)
+      if(this.state.grid[i][j]===100 && i===3 && j===5 && this.state.grid[2][5]===0)
          this.setState({win: true});
       else {
         let x = i;
@@ -136,7 +136,7 @@ export default class GameScreen extends React.Component {
     if(this.state.grid[i][j]===this.state.grid[i][j+1] || this.state.grid[i][j]===this.state.grid[i][j-1])
        return;
     try {
-      if(this.state.grid[i][j]===100 && i===1 && j===5)
+      if(this.state.grid[i][j]===100 && i===1 && j===5 && this.state.grid[2][5]===0)
          this.setState({win: true});
       else {
         let x = i;
@@ -181,7 +181,7 @@ export default class GameScreen extends React.Component {
       if(!(this.state.grid[i][j]===this.state.grid[i][j+1] || this.state.grid[i][j]===this.state.grid[i][j-1]))
         return;
     try {
-      if(this.state.grid[i][j]===100 && i===2 && j===6)
+      if(this.state.grid[i][j]===100 && i===2 && j===6 && this.state.grid[2][5]===0)
          this.setState({win: true});
       else {
         let x = j;
@@ -226,7 +226,7 @@ export default class GameScreen extends React.Component {
       if(!(this.state.grid[i][j]===this.state.grid[i][j+1] || this.state.grid[i][j]===this.state.grid[i][j-1]))
         return;
     try {
-      if(this.state.grid[i][j]==100 && i===2 && j===4)
+      if(this.state.grid[i][j]==100 && i===2 && j===4 && this.state.grid[2][5]===0)
          this.setState({win: true});
       else {
         let x = j;
