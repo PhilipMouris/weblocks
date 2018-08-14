@@ -22,6 +22,8 @@ export default class MenuScreen extends React.Component {
     }
   }
 
+
+
   render() {
     if(this.state.flag)
       return <View style={styles.container}></View>
@@ -35,7 +37,7 @@ export default class MenuScreen extends React.Component {
         </Animatable.View>
         <TouchableWithoutFeedback>
           <View>
-            <Text onPress={() => this.props.navigation.navigate('Game',{map: mapArray,level: this.state.level})} style={styles.start}>Start</Text>
+            <Text onPress={() => this.props.navigation.push('Game',{map: mapArray,level: this.state.level})} style={styles.start}>Start</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback>

@@ -304,6 +304,11 @@ export default class GameScreen extends React.Component {
                                                           this.setState({grid: currentMap})}}>Reset</Text>
             </View>
           </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback>
+            <View style={styles.backContainer}>
+              <Text style={styles.back} onPress={() => this.props.navigation.push('Menu')}>Back</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       );
     }
@@ -367,5 +372,14 @@ const styles = StyleSheet.create({
   resetContainer: {
     position: 'absolute',
     top: '80%',
-  }
+  },
+  backContainer: {
+    position: 'absolute',
+    top: '85%',
+  },
+  back: {
+    fontSize: 20,
+    color: 'white',
+    fontFamily: 'PressStart2P',
+  },
 });
