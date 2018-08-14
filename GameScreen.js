@@ -263,6 +263,7 @@ export default class GameScreen extends React.Component {
   }
 
   render() {
+    AsyncStorage.setItem('weblocksLevel',this.state.level+'');
     let letterMap = data.maps[this.props.navigation.state.params.level];
     let nextMap = converter.convert(letterMap.substring(3,39));
     if(this.state.win && this.state.level===100)

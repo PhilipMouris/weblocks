@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, Dimensions, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, Text, Button, StyleSheet, Dimensions, TouchableWithoutFeedback, Image, AsyncStorage } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import * as Animatable from 'react-native-animatable';
 import cube from './assets/splash.png';
@@ -7,8 +7,26 @@ import data from './maps.json';
 import converter from './converter';
 
 export default class MenuScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      level: 0,
+      flag: true,
+    };
+  }
+
+  async componentDidMount() {
+    await AsyncStorage.getItem('weblocksLevel').then(res => this.setState({level: parseInt(res),flag: false}));
+    if(!this.state.level) {
+      await AsyncStorage.setItem('weblocksLevel','1').then(res => this.setState({level: 1,flag: false}));
+    }
+  }
+
   render() {
-    let letterMap = data.maps[0];
+    if(this.state.flag)
+      return <View style={styles.container}></View>
+    else {
+    let letterMap = data.maps[this.state.level-1];
     let mapArray = converter.convert(letterMap.substring(3,39));
     return (
       <View style={styles.container}>
@@ -17,7 +35,7 @@ export default class MenuScreen extends React.Component {
         </Animatable.View>
         <TouchableWithoutFeedback>
           <View>
-            <Text onPress={() => this.props.navigation.navigate('Game',{map: mapArray,level: 1})} style={styles.start}>Start</Text>
+            <Text onPress={() => this.props.navigation.navigate('Game',{map: mapArray,level: this.state.level})} style={styles.start}>Start</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback>
@@ -25,8 +43,18 @@ export default class MenuScreen extends React.Component {
             <Text onPress={() => this.props.navigation.navigate('How')} style={styles.howto}>HowTo</Text>
           </View>
         </TouchableWithoutFeedback>
+        <View style={styles.levelsContainer}>
+          <Text style={styles.levelsText}>Current Level: {this.state.level}</Text>
+          <TouchableWithoutFeedback>
+            <View>
+              <Text style={styles.levelsText} onPress={() =>  {this.setState({level: 1})
+                                     AsyncStorage.setItem('weblocksLevel','1')}}>Reset Levels</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
       </View>
     )
+   }
   }
 }
 
@@ -56,5 +84,15 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     marginBottom: 30,
+  },
+  levelsContainer: {
+    marginTop: 30,
+  },
+  levelsText: {
+    fontSize: 15,
+    marginBottom: 10,
+    color: 'white',
+    fontFamily: 'PressStart2P',
+    textAlign: 'center',
   }
 })
