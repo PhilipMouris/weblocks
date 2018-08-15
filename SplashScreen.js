@@ -59,12 +59,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   splashText: {
-    fontSize: 13,
+    fontSize: 11,
     color: 'white',
     fontFamily: 'PressStart2P',
     position: 'absolute',
     top: '60%',
-    left: '13%',
+    left: '14%',
     transform: [{rotate: '8deg'}],
   },
   splashLogo: {
