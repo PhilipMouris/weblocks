@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, Dimensions, TouchableHighlight, Image } from 'react-native';
+import { View, Text, Button, StyleSheet, Dimensions, TouchableHighlight, Image, BackHandler, AsyncStorage } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import cube from './assets/splash.png';
 import { Font } from 'expo';
@@ -14,6 +14,7 @@ export default class SplashScreen extends React.Component {
   }
 
   componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => true);
     Font.loadAsync({
       'PressStart2P': require('./assets/PressStart2P-Regular.ttf'),
     }).then(()=>this.setState({fontLoaded: true}));
@@ -58,15 +59,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   splashText: {
-    fontSize: 14,
+    fontSize: 13,
     color: 'white',
     fontFamily: 'PressStart2P',
     position: 'absolute',
     top: '60%',
-    left: '3%',
+    left: '13%',
     transform: [{rotate: '8deg'}],
   },
   splashLogo: {
-    position: 'relative',
+    position: 'absolute',
   }
 })

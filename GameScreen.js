@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableWithoutFeedback, Dimensions, Alert, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, TouchableWithoutFeedback, Dimensions, Alert, AsyncStorage, Image, BackHandler } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import * as Animatable from 'react-native-animatable';
 import { Font } from 'expo';
 import data from './maps.json';
 import converter from './converter';
+import arrow from './assets/arrow.png';
 
 export default class GameScreen extends React.Component {
   constructor(props) {
@@ -15,6 +16,10 @@ export default class GameScreen extends React.Component {
       level: this.props.navigation.state.params.level,
       win: false,
     };
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => true);
   }
 
   grid() {
@@ -65,21 +70,38 @@ export default class GameScreen extends React.Component {
           pixels = [<View style={topPixelStyle}></View>,
                     <View style={middlePixelStyle}></View>,
                     <View style={bottomPixelStyle}></View>];
-
-        buttonList.push(
-          <TouchableWithoutFeedback>
-            <GestureRecognizer
-             onSwipeUp={()=>this.onSwipeUp(i,j)}
-             onSwipeDown={()=>this.onSwipeDown(i,j)}
-             onSwipeLeft={()=>this.onSwipeLeft(i,j)}
-             onSwipeRight={()=>this.onSwipeRight(i,j)}
-             >
-              <View style={buttonStyle}>
-                {pixels}
-              </View>
-            </GestureRecognizer>
-          </TouchableWithoutFeedback>
-        )
+        if(i===2 && j===5)
+          buttonList.push(
+            <TouchableWithoutFeedback>
+              <GestureRecognizer
+               onSwipeUp={()=>this.onSwipeUp(i,j)}
+               onSwipeDown={()=>this.onSwipeDown(i,j)}
+               onSwipeLeft={()=>this.onSwipeLeft(i,j)}
+               onSwipeRight={()=>this.onSwipeRight(i,j)}
+               >
+                <View style={buttonStyle}>
+                    {pixels}
+                  <Image source={arrow} style={styles.arrow} />
+                </View>
+              </GestureRecognizer>
+            </TouchableWithoutFeedback>
+          )
+        else {
+          buttonList.push(
+            <TouchableWithoutFeedback>
+              <GestureRecognizer
+               onSwipeUp={()=>this.onSwipeUp(i,j)}
+               onSwipeDown={()=>this.onSwipeDown(i,j)}
+               onSwipeLeft={()=>this.onSwipeLeft(i,j)}
+               onSwipeRight={()=>this.onSwipeRight(i,j)}
+               >
+                <View style={buttonStyle}>
+                  {pixels}
+                </View>
+              </GestureRecognizer>
+            </TouchableWithoutFeedback>
+          )
+        }
       }
     return buttonList;
   }
@@ -273,7 +295,7 @@ export default class GameScreen extends React.Component {
           <Animatable.Text style={styles.congratsText} animation="tada">You are a block master</Animatable.Text>
           <TouchableWithoutFeedback>
             <View>
-              <Animatable.Text style={styles.doneText} onPress={() => this.props.navigation.navigate('Menu')} animation="tada">Done</Animatable.Text>
+              <Animatable.Text style={styles.doneText} onPress={() => this.props.navigation.push('Menu')} animation="tada">Done</Animatable.Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -314,7 +336,7 @@ export default class GameScreen extends React.Component {
     }
   }
 }
-const GRID_SIZE = 500;
+const GRID_SIZE = Dimensions.get('window').width*(80/100);
 const colors = ['#494949', 'red', 'orange', 'green', 'blue', 'yellow', 'purple', 'pink', 'brown', 'fuchsia', 'crimson', 'greenyellow', 'silver', 'dodgerblue', 'darkred'];
 const styles = StyleSheet.create({
   container: {
@@ -324,13 +346,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   grid: {
-    height: 500,
-    width: 500,
+    height: Dimensions.get('window').width*(80/100),
+    width: Dimensions.get('window').width*(80/100),
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    position: 'absolute',
-    top: '25%'
+    top: '28%',
   },
   winningText: {
     fontSize: 50,
@@ -361,25 +382,29 @@ const styles = StyleSheet.create({
     fontFamily: 'PressStart2P',
   },
   levelText: {
-    fontSize: 20,
+    fontSize: 30,
     color: 'white',
     fontFamily: 'PressStart2P',
   },
   levelContainer: {
-    position: 'absolute',
-    top: '15%',
+    top: '14%',
   },
   resetContainer: {
-    position: 'absolute',
-    top: '80%',
+    top: '-10%',
   },
   backContainer: {
-    position: 'absolute',
-    top: '85%',
+    top: '-9%',
   },
   back: {
     fontSize: 20,
     color: 'white',
     fontFamily: 'PressStart2P',
   },
+  arrow: {
+    width: 10,
+    height: 10,
+    position: 'absolute',
+    right: '-12%',
+    top: '45%',
+  }
 });
