@@ -13,9 +13,9 @@ export default class SplashScreen extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', () => true);
-    Font.loadAsync({
+    await Font.loadAsync({
       'PressStart2P': require('./assets/PressStart2P-Regular.ttf'),
     }).then(()=>this.setState({fontLoaded: true}));
     setTimeout(()=>this.setState({text: "w"}),500);
