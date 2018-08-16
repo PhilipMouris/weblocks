@@ -303,7 +303,7 @@ export default class GameScreen extends React.Component {
     if(this.state.win)
       return (
         <View style={styles.container}>
-         <Animatable.Text animation="bounceInDown" style={styles.winningText}>GAMED</Animatable.Text>
+         <Animatable.Text animation="bounceInDown" style={styles.winningText}>Good Job</Animatable.Text>
          <TouchableWithoutFeedback>
            <View>
              <Animatable.Text animation="bounceInDown" style={styles.nextLevel} onPress={() => this.props.navigation.push('Game',{map: nextMap,level: this.state.level+1})}>Next Level</Animatable.Text>
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     top: '28%',
   },
   winningText: {
-    fontSize: 50,
+    fontSize: 40,
     color: 'white',
     fontFamily: 'PressStart2P',
   },
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
   },
   nextLevel: {
     marginTop: '10%',
-    fontSize: 20,
+    fontSize: 18,
     color: 'white',
     fontFamily: 'PressStart2P',
   },
