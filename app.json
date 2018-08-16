@@ -1,5 +1,13 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "name": "weblocks",
+    "icon": "./assets/icon.jpg",
+    "version": "1.0.0",
+    "slug": "weblocks",
+    "sdkVersion": "27.0.0",
+    "android": {
+      "package": "com.thewebops.weblocks"
+      }
+    }
   }
 }
