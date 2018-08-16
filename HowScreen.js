@@ -11,7 +11,7 @@ export default class HowScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.howText}>Your goal is to get the single light blue block to the cell marked by the arrow</Text>
+        <Text style={styles.howText}>Move the single light blue block to the cell marked by the arrow. Black blocks don{"'"}t move</Text>
         <TouchableWithoutFeedback>
           <View>
             <Text style={styles.backText} onPress={() => this.props.navigation.navigate('Menu')}>Back</Text>
