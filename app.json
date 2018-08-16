@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "weblocks",
-    "icon": "./assets/icon.jpg",
+    "icon": "./assets/icon.png",
     "version": "1.0.0",
     "slug": "weblocks",
     "sdkVersion": "27.0.0",
